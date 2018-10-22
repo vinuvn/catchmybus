@@ -34,11 +34,12 @@ public class Viewdata  extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewdata_layout);
+        getSupportActionBar().setTitle("Fetch my bus");
         list1=(ListView)findViewById( R.id.listdata);
         mfirebase=FirebaseDatabase.getInstance();
         mdatabase=mfirebase.getReference("bus");
         read=(Button)findViewById(R.id.button5);
-        Toast.makeText(getApplicationContext(),"datasnap", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"datasnap", Toast.LENGTH_SHORT).show();
         read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +47,7 @@ public class Viewdata  extends AppCompatActivity{
                 mdatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Toast.makeText(getApplicationContext(),"datachange", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getApplicationContext(),"datachange", Toast.LENGTH_SHORT).show();
                         showdata(dataSnapshot);
                     }
 
@@ -66,7 +67,7 @@ public class Viewdata  extends AppCompatActivity{
     }
 
     public void showdata(DataSnapshot dataSnapshot) {
-        Toast.makeText(getApplicationContext(),"datachange1111", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"datachange1111", Toast.LENGTH_SHORT).show();
         ArrayList<String> array=new ArrayList<>();
         for (DataSnapshot ds:dataSnapshot.getChildren())
         {
@@ -74,15 +75,15 @@ public class Viewdata  extends AppCompatActivity{
             userid=ds.getKey().toString();
             Toast.makeText(getApplicationContext(),userid, Toast.LENGTH_SHORT).show();
            // Toast.makeText(getApplicationContext(),userid, Toast.LENGTH_SHORT).show();
-            String a1=  ds.child(userid).child("start").getValue(String.class);
-            Toast.makeText(getApplicationContext(),a1, Toast.LENGTH_SHORT).show();
+           // String a1=  ds.child(userid).child("start").getValue(String.class);
+            Toast.makeText(getApplicationContext(),userid, Toast.LENGTH_SHORT).show();
           //**  user.setNo(ds.child(userid).getValue(com.example.vinu.fire.Userinformation.class).getNo());
           //**  user.setStart(ds.child(userid).getValue(com.example.vinu.fire.Userinformation.class).getStart());
            // Log.d(TAG,"name: "+user.getName());
             //Log.d(TAG,"name: "+user.getClasses());
             //Log.d()
            // ArrayList<String> array=new ArrayList<>();
-            array.add(a1);
+            array.add(userid);
            // array.add(user.getNo());
           //  array.add(user.getStart());
 

@@ -48,7 +48,7 @@ public Button save,test;
         setContentView(R.layout.activity_main);
 
 
-        getSupportActionBar().setTitle("Bus Tracker");
+        getSupportActionBar().setTitle("Fetch my bus");
         e1=(EditText)findViewById(R.id.editText);
         e2=(EditText)findViewById(R.id.editText2);
         e3=(EditText)findViewById(R.id.editText3);

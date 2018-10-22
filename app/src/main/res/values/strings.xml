@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Fire</string>
+    <array name="type">
+        <item>fast passenger</item>\
+        <item>limited stop</item>
+        <item>ordinary</item>
+        <item>interstate</item>
+    </array>
+    <array name="timing">
+        <item>6am to 12pm</item>\
+        <item>12pm to 8 pm</item>
+        <item>8pm to 6am</item>
+
+    </array>
 </resources>
