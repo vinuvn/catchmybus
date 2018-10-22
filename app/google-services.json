@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "579671359817",
+    "firebase_url": "https://bustracker-1999f.firebaseio.com",
+    "project_id": "bustracker-1999f",
+    "storage_bucket": "bustracker-1999f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579671359817:android:97f9f1992514231e",
+        "android_client_info": {
+          "package_name": "com.example.vinu.fire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579671359817-eqofiv9buv93bhjh0mndai8irgd0tp2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vinu.fire",
+            "certificate_hash": "3d5bed85bc4783bf9ce3339c518031969dab34fa"
+          }
+        },
+        {
+          "client_id": "579671359817-gvvidafb2jksap2v7u2cpcihcl7cfvob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzozhEoi8h1tAFaqNC6yDpvAq1Yp9O5Bw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579671359817-gvvidafb2jksap2v7u2cpcihcl7cfvob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
