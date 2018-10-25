@@ -16,9 +16,9 @@ public String no;
     public Userinformation() {
     }
 
-    public Userinformation(String no, String start, String stop, String time, String type) {
+    public Userinformation(String no,String r_id, String start, String stop, String time, String type) {
         this.no = no;
-
+        this.r_id=r_id;
         this.start = start;
         this.stop = stop;
         this.time = time;

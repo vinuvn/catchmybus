@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     public Button read;
     public EditText et1;
     public EditText et2;
+    Spinner et3;
+    Spinner et4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
         mfirebase=FirebaseDatabase.getInstance();
         mdatabase=mfirebase.getReference("bus");
         read=(Button)findViewById(R.id.button5);
+        et1=(EditText)findViewById(R.id.e1);
+        et2=(EditText)findViewById(R.id.e2);
+        et3=(Spinner)findViewById(R.id.e3);
+        et4=(Spinner)findViewById(R.id.e4);
+        String c1=et1.getText().toString();
+        String c2=et2.getText().toString();
+        String c3=et3.getSelectedItem().toString();
+        String c4=et4.getSelectedItem().toString();
+
+
         //all declarations and initialisations
 
         read.setOnClickListener(new View.OnClickListener() {
@@ -73,18 +85,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void showdata(DataSnapshot dataSnapshot) {
         //Toast.makeText(getApplicationContext(),"datachange1111", Toast.LENGTH_SHORT).show();
+        String c1=et1.getText().toString();
+        String c2=et2.getText().toString();
+        String c3=et3.getSelectedItem().toString();
+        String c4=et4.getSelectedItem().toString();
         ArrayList<String> array=new ArrayList<>();
         for (DataSnapshot ds:dataSnapshot.getChildren())
         {
 
             userid=ds.getKey().toString();
-            Toast.makeText(getApplicationContext(),userid, Toast.LENGTH_SHORT).show();
+
 
             Userinformation userinformation=ds.getValue(Userinformation.class);
 
             // ArrayList<String> array=new ArrayList<>();
            // array.add(a1);
-             array.add(userinformation.getNo());
+            String check1=userinformation.getType();userinformation.getTime();
+            //String check2=...........for time
+           // Toast.makeText(getApplicationContext(),check1, Toast.LENGTH_SHORT).show();
+           if (userinformation.getType().equalsIgnoreCase(c4)) {                   //checks for bus type
+                array.add(userinformation.getNo());
+           }
             //  array.add(user.getStart());
 
         }
