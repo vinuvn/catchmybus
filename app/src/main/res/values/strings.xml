@@ -7,9 +7,9 @@
         <item>interstate</item>
     </array>
     <array name="timing">
-        <item>6am to 12pm</item>\
-        <item>12pm to 8 pm</item>
-        <item>8pm to 6am</item>
+        <item>12am to 10am</item>\
+        <item>10am to 6pm</item>
+        <item>6pm to 12am</item>
 
     </array>
 </resources>

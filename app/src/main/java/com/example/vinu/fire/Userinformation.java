@@ -16,6 +16,15 @@ public String no;
     public Userinformation() {
     }
 
+    public Userinformation(String no, String start, String stop, String time, String type) {
+        this.no = no;
+
+        this.start = start;
+        this.stop = stop;
+        this.time = time;
+        this.type = type;
+    }
+
     public String getNo() {
         return no;
     }

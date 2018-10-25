@@ -1,11 +1,15 @@
 package com.example.vinu.fire;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuthException;
@@ -15,114 +19,77 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-public Button save,test;
-    public EditText e1;
-    public EditText e2;
-    public EditText e3;
-    public EditText e4;
-    public EditText e9;
-    public Button receive;
-
-
-   public FirebaseDatabase mfirebase=FirebaseDatabase.getInstance();
-    private DatabaseReference mdatabase=mfirebase.getReference("bus");
-   // private   DatabaseReference m1;//=mdatabase.child("new");
-    private DatabaseReference m11;//=m1.child("name");
-    private    DatabaseReference m12;
-    private    DatabaseReference m13;
-    private    DatabaseReference m14;
-    private    DatabaseReference m15;//=m1.child("class");
-
-
-
-
+    public FirebaseDatabase mfirebase;
+    private DatabaseReference mdatabase;
+    public   String userid;
+    private ListView list1;
+    public Button read;
+    public EditText et1;
+    public EditText et2;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+      getSupportActionBar().setTitle("Catch my bus");
 
 
-        getSupportActionBar().setTitle("Fetch my bus");
-        e1=(EditText)findViewById(R.id.editText);
-        e2=(EditText)findViewById(R.id.editText2);
-        e3=(EditText)findViewById(R.id.editText3);
-        e4=(EditText)findViewById(R.id.editText4);
-        e9=(EditText)findViewById(R.id.editText9);
-        save=(Button)findViewById(R.id.button2);
-        receive=(Button)findViewById(R.id.button3);
-        test=(Button)findViewById(R.id.readdata);
-        save.setOnClickListener(new View.OnClickListener() {
+        list1=(ListView)findViewById( R.id.listdata);
+        mfirebase=FirebaseDatabase.getInstance();
+        mdatabase=mfirebase.getReference("bus");
+        read=(Button)findViewById(R.id.button5);
+        //all declarations and initialisations
+
+        read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s1=e1.getText().toString();
-                String s2=e2.getText().toString();
-                String s3=e3.getText().toString();
-                String s4=e4.getText().toString();
-                String s9=e9.getText().toString();
 
-               // m1=mdatabase.child(s3);
-               String id= mdatabase.push().getKey();
-                m11=mdatabase.child(id).child("no");
-                m12=mdatabase.child(id).child("start");
-                m13=mdatabase.child(id).child("stop");
-                m14=mdatabase.child(id).child("time");
-                m15=mdatabase.child(id).child("type");
-               // m1.setValue("best student");
-                m11.setValue(s1);
-                m12.setValue(s2);
-                m13.setValue(s3);
-                m14.setValue(s4);
-                m15.setValue(s9);
-               // mdatabase.addValueEventListener(new V)
-
-
-
-            }
-        });
-        receive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_SHORT).show();
                 mdatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Toast.makeText(getApplicationContext(), "und", Toast.LENGTH_SHORT).show();
-                        if(dataSnapshot.getValue()!=null)
-                        { Toast.makeText(getApplicationContext(), "und", Toast.LENGTH_SHORT).show();
-                            String c1 =dataSnapshot.child("class").getValue().toString();
-                            String c2 =dataSnapshot.child("name").getValue().toString();
-
-                            e1.setText(c1);
-                             e2.setText(c2);
-                            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_SHORT).show();
-                        }
-
-
-
+                        // Toast.makeText(getApplicationContext(),"datachange", Toast.LENGTH_SHORT).show();
+                        showdata(dataSnapshot);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(getApplicationContext(),databaseError.getMessage(),Toast.LENGTH_SHORT).show();
 
                     }
                 });
 
             }
         });
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Viewdata.class);
-                startActivity(intent);
-            }
-        });
+
+
+
+
 
     }
+
+    public void showdata(DataSnapshot dataSnapshot) {
+        //Toast.makeText(getApplicationContext(),"datachange1111", Toast.LENGTH_SHORT).show();
+        ArrayList<String> array=new ArrayList<>();
+        for (DataSnapshot ds:dataSnapshot.getChildren())
+        {
+
+            userid=ds.getKey().toString();
+            Toast.makeText(getApplicationContext(),userid, Toast.LENGTH_SHORT).show();
+
+            Userinformation userinformation=ds.getValue(Userinformation.class);
+
+            // ArrayList<String> array=new ArrayList<>();
+           // array.add(a1);
+             array.add(userinformation.getNo());
+            //  array.add(user.getStart());
+
+        }
+        ArrayAdapter adpter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
+        list1.setAdapter(adpter);
+    }
 }
+
