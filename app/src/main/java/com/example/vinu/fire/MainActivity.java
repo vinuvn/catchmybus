@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             // ArrayList<String> array=new ArrayList<>();
            // array.add(a1);
             String check1=userinformation.getType();userinformation.getTime();
-            //String check2=...........for time the 
+            //String check2=...........for time the
            // Toast.makeText(getApplicationContext(),check1, Toast.LENGTH_SHORT).show();
            if (userinformation.getType().equalsIgnoreCase(c4)) {                   //checks for bus type
                 array.add(userinformation.getNo());
