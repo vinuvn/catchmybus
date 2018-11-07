@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> a1=new ArrayList<>();
     ArrayList<String> a2=new ArrayList<>();
     String urouteid;
-
+    ArrayList<String> array=new ArrayList<>();
+   // String copy[]=new String[]{};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,7 +152,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                //Toast.makeText(getApplicationContext(),a1.get(position), Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(MainActivity.this,Display.class);
+                intent.putExtra("id",a1.get(position));
+                startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -160,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         String c2=et2.getText().toString();
         String c3=et3.getSelectedItem().toString();
         String c4=et4.getSelectedItem().toString();
-        ArrayList<String> array=new ArrayList<>();
+
         for (DataSnapshot ds:dataSnapshot.getChildren())
         {
 
@@ -178,6 +190,8 @@ public class MainActivity extends AppCompatActivity {
                if (a2.contains(userinformation.getR_id()))
                {
                    array.add(userinformation.getNo());
+                   a1.add(userid);
+
                }
            }
             //  array.add(user.getStart());
