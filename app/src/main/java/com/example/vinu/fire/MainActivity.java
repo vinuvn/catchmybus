@@ -28,6 +28,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     public FirebaseDatabase mfirebase;
     private DatabaseReference mdatabase;
+    private DatabaseReference rootdata;
     public   String userid;
     private ListView list1;
     public Button read;
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     public EditText et2;
     Spinner et3;
     Spinner et4;
+    int a;
+    ArrayList<String> a1=new ArrayList<>();
+    ArrayList<String> a2=new ArrayList<>();
+    String urouteid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         list1=(ListView)findViewById( R.id.listdata);
         mfirebase=FirebaseDatabase.getInstance();
         mdatabase=mfirebase.getReference("bus");
+        rootdata=mfirebase.getReference("route");
         read=(Button)findViewById(R.id.button5);
         et1=(EditText)findViewById(R.id.e1);
         et2=(EditText)findViewById(R.id.e2);
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         et4=(Spinner)findViewById(R.id.e4);
         String c1=et1.getText().toString();
         String c2=et2.getText().toString();
-        String c3=et3.getSelectedItem().toString();
+        final String c3=et3.getSelectedItem().toString();
         String c4=et4.getSelectedItem().toString();
 
 
@@ -62,11 +68,74 @@ public class MainActivity extends AppCompatActivity {
         read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                rootdata.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot d1:dataSnapshot.getChildren())
+                        {
+                            urouteid=d1.getKey().toString();
+                            int start=0,end=0;
+                            int flag=0;
+                           // Toast.makeText(getApplicationContext(),urouteid,Toast.LENGTH_SHORT).show();
+                           // et1.setText(urouteid);
+                           // String te=d1.child("1").getValue().toString();
+                            long len=d1.getChildrenCount();
+                           // String bb=String.valueOf(len);
+
+                           // Toast.makeText(getApplicationContext(),bb,Toast.LENGTH_SHORT).show();
+
+                            for (int i=1;i<=len;i++)
+                            {
+                                String stop=String.valueOf(i);
+                                String te=d1.child(stop).getValue().toString();
+                                if (te.equalsIgnoreCase(et1.getText().toString()))
+                                {
+                                    flag++;
+                                    start=i;
+
+                                }
+                                if (te.equalsIgnoreCase(et2.getText().toString()))
+                                {
+                                    flag++;
+                                    end=i;
+
+                                }
+
+                            }
+                            if (flag==2)
+                            {
+                                if (end>start)
+                                {
+                                    Toast.makeText(getApplicationContext(),urouteid,Toast.LENGTH_SHORT).show();
+                                    a2.add(urouteid);
+                                }
+                            }
+
+
+
+
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+               if(c3.equalsIgnoreCase("12am to 10am"))
+                    a=1;
+                else if (c3.equalsIgnoreCase("10am to 6pm"))
+                    a=2;
+                else
+                    a=3;
+
 
                 mdatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Toast.makeText(getApplicationContext(),"datachange", Toast.LENGTH_SHORT).show();
+
                         showdata(dataSnapshot);
                     }
 
@@ -86,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showdata(DataSnapshot dataSnapshot) {
-        //Toast.makeText(getApplicationContext(),"datachange1111", Toast.LENGTH_SHORT).show();
+
         String c1=et1.getText().toString();
         String c2=et2.getText().toString();
         String c3=et3.getSelectedItem().toString();
@@ -100,19 +169,38 @@ public class MainActivity extends AppCompatActivity {
 
             Userinformation userinformation=ds.getValue(Userinformation.class);
 
-            // ArrayList<String> array=new ArrayList<>();
-           // array.add(a1);
+
             String check1=userinformation.getType();userinformation.getTime();
-            //String check2=...........for time the
-           // Toast.makeText(getApplicationContext(),check1, Toast.LENGTH_SHORT).show();
-           if (userinformation.getType().equalsIgnoreCase(c4)) {                   //checks for bus type
-                array.add(userinformation.getNo());
+
+            String t2=userinformation.getTime().toString();
+            int result=timecheck(t2);
+           if (userinformation.getType().equalsIgnoreCase(c4) && result==a) {                   //checks for bus type
+               if (a2.contains(userinformation.getR_id()))
+               {
+                   array.add(userinformation.getNo());
+               }
            }
             //  array.add(user.getStart());
 
         }
         ArrayAdapter adpter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,array);
         list1.setAdapter(adpter);
+    }
+    public  int timecheck(String t1)
+    {
+        Float newtime= Float.parseFloat(t1);
+        int time=(int)newtime.intValue();
+       // Toast.makeText(getApplicationContext(),t1, Toast.LENGTH_SHORT).show();
+        if(time < 9|| time==24)
+        {
+            return  1;
+        }
+        else if (time< 18 && time > 9)
+            return  2;
+        else
+            return  3;
+
+
     }
 }
 
