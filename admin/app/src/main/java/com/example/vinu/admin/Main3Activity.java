@@ -1,5 +1,6 @@
 package com.example.vinu.admin;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -72,6 +73,7 @@ public class Main3Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 array.add(r4.getText().toString());
+                r4.setText("");
                 //fruits_list = new ArrayList<String>(Arrays.asList(array));
 
                // ArrayAdapter adpter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,array);
@@ -87,8 +89,11 @@ public class Main3Activity extends AppCompatActivity {
 
                 {    int val=i+1;
                     String value=String.valueOf(val);
-                    m11=mdatabase.child(id).child(array.get(i));
-                    m11.setValue(value);
+                    m11=mdatabase.child(id).child(value);
+                    m11.setValue(array.get(i));
+                    Intent intent=new Intent(Main3Activity.this,MainActivity.class);
+                    startActivity(intent);
+                   // m11=mdatabase.child(id).child(array.get(i));
                 }
             }
         });
