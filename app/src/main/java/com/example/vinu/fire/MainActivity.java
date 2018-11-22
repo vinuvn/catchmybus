@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             {
                                 if (end>start)
                                 {
-                                    Toast.makeText(getApplicationContext(),urouteid,Toast.LENGTH_SHORT).show();
+                                  //  Toast.makeText(getApplicationContext(),urouteid,Toast.LENGTH_SHORT).show();
                                     a2.add(urouteid);
                                 }
                             }
@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
     public void showdata(DataSnapshot dataSnapshot) {
 
         String c1=et1.getText().toString();
+
         String c2=et2.getText().toString();
         String c3=et3.getSelectedItem().toString();
         String c4=et4.getSelectedItem().toString();
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             Userinformation userinformation=ds.getValue(Userinformation.class);
 
 
-            String check1=userinformation.getType();userinformation.getTime();
+            String check1=userinformation.getType();
 
             String t2=userinformation.getTime().toString();
             int result=timecheck(t2);
