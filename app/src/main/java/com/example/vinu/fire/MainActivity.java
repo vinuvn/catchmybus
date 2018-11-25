@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> a2=new ArrayList<>();
     String urouteid;
     ArrayList<String> array=new ArrayList<>();
+    String c1,c2,c3,c4;
    // String copy[]=new String[]{};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
         et2=(EditText)findViewById(R.id.e2);
         et3=(Spinner)findViewById(R.id.e3);
         et4=(Spinner)findViewById(R.id.e4);
-        String c1=et1.getText().toString();
-        String c2=et2.getText().toString();
-        final String c3=et3.getSelectedItem().toString();
-        String c4=et4.getSelectedItem().toString();
+
+
 
 
         //all declarations and initialisations
@@ -70,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
         read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                c1=et1.getText().toString();
+                c2=et2.getText().toString();
+                c3=et3.getSelectedItem().toString();
+                c4=et4.getSelectedItem().toString();
+                Toast.makeText(getApplicationContext(),c1, Toast.LENGTH_SHORT).show();
                 rootdata.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -156,9 +160,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //Toast.makeText(getApplicationContext(),a1.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),c2, Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(MainActivity.this,Display.class);
                 intent.putExtra("id",a1.get(position));
+                intent.putExtra("userdest",c2);
                 startActivity(intent);
 
             }

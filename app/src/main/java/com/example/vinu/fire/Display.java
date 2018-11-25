@@ -19,7 +19,7 @@ public class Display extends AppCompatActivity {
     private  DatabaseReference track1;
     private DatabaseReference mdatabase;
     EditText e1,e2,e3;
-    String s1,s2,s3,s4,tr1,tr2;
+    String s1,s2,s3,s4,s5,tr1,tr2;
     ImageButton i1;
 
     @Override
@@ -28,7 +28,8 @@ public class Display extends AppCompatActivity {
         setContentView(R.layout.activity_display);
         Intent intent=getIntent();
         final String id=intent.getStringExtra("id");
-        Toast.makeText(getApplicationContext(),id,Toast.LENGTH_SHORT).show();
+        final String userdest=intent.getStringExtra("userdest");
+        Toast.makeText(getApplicationContext(),userdest,Toast.LENGTH_SHORT).show();
         mfirebase=FirebaseDatabase.getInstance();
         mdatabase=mfirebase.getReference("bus");
         e1=(EditText)findViewById(R.id.editText);
@@ -46,6 +47,7 @@ public class Display extends AppCompatActivity {
                         s2=d1.child("stop").getValue().toString();
                         s3=d1.child("type").getValue().toString();
                         s4=d1.child("no").getValue().toString();
+                        s5=d1.child("r_id").getValue().toString();
 
                         break;
                     }
@@ -89,6 +91,9 @@ i1.setOnClickListener(new View.OnClickListener() {
         });*/
         Intent intent=new Intent(Display.this,Track.class);
         intent.putExtra("id",s4);
+        intent.putExtra("id2",s5);
+       // intent.putExtra("dest",s2);
+        intent.putExtra("userdest",userdest);
        // intent.putExtra("l1",tr1);
         //intent.putExtra("l2",tr2);
 
