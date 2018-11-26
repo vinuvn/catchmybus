@@ -1,6 +1,7 @@
 package com.example.vinu.fire;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
     public FirebaseDatabase mfirebase;
     private DatabaseReference mdatabase;
     private DatabaseReference rootdata;
@@ -44,11 +46,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> array=new ArrayList<>();
     String c1,c2,c3,c4;
    // String copy[]=new String[]{};
+   Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
-      getSupportActionBar().setTitle("Catch my bus");
+
+        getSupportActionBar().setTitle("Catch my bus");
 
 
         list1=(ListView)findViewById( R.id.listdata);
@@ -160,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getApplicationContext(),c2, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),a1.get(position), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(MainActivity.this,Display.class);
                 intent.putExtra("id",a1.get(position));
                 intent.putExtra("userdest",c2);
@@ -191,11 +197,12 @@ public class MainActivity extends AppCompatActivity {
             String check1=userinformation.getType();
 
             String t2=userinformation.getTime().toString();
+            String t3=userinformation.getStatus().toString();
             int result=timecheck(t2);
-           if (userinformation.getType().equalsIgnoreCase(c4) && result==a) {                   //checks for bus type
+           if (userinformation.getType().equalsIgnoreCase(c4) && result==a && t3.equalsIgnoreCase("1")) {                   //checks for bus type
                if (a2.contains(userinformation.getR_id()))
                {
-                   array.add(userinformation.getNo());
+                   array.add(userinformation.getStart()+"-"+userinformation.getStop()+" "+userinformation.getType());
                    a1.add(userid);
 
                }
