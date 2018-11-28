@@ -48,7 +48,7 @@ public class Track extends AppCompatActivity {
     Geocoder geocoder;
     List<Address> addresslist;
     LocationManager locationManager;
-    Button b3;
+    Button b3,b4;
 
     TextView t1,t2,t3;
     String userdest, r_id;
@@ -70,6 +70,7 @@ public class Track extends AppCompatActivity {
         t2 = (TextView) findViewById(R.id.textView2);
         t3=(TextView) findViewById(R.id.textView3);
         b3=(Button)findViewById(R.id.button3) ;
+        b4=(Button)findViewById(R.id.button4) ;
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
 
 
@@ -95,8 +96,15 @@ public class Track extends AppCompatActivity {
                         try {
                             addresslist=geocoder.getFromLocation(dd1,dd2,1);
                             String addressStr = addresslist.get(0).getAddressLine(0);
-                            Toast.makeText(getApplicationContext(),addressStr, Toast.LENGTH_SHORT).show();
-                            t1.setText(addressStr);
+                            String areaStr = addresslist.get(0).getLocality();
+                            String cityStr = addresslist.get(0).getAdminArea();
+                            String countryStr = addresslist.get(0).getCountryName();
+                            String postalcodeStr = addresslist.get(0).getPostalCode();
+                           // Toast.makeText(getApplicationContext(),areaStr+"-"+cityStr , Toast.LENGTH_SHORT).show();
+
+                            String separated[];
+                                    separated = addressStr.split(",");
+                            t1.setText(separated[0]+" "+separated[1]);
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -146,11 +154,27 @@ public class Track extends AppCompatActivity {
 
                 float results[] = new float[10];
                 Location.distanceBetween(dd1,dd2,dd3,dd4,results);
-                Toast.makeText(getApplicationContext(), String.valueOf(results[0]), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), String.valueOf(results[0]), Toast.LENGTH_SHORT).show();
                 float totdist= (float) (results[0]/1000.0);
                 float time= (float) (totdist/40.0);
-                t2.setText(totdist+" km");
-                 t3.setText(time+"Hrs");
+                float x=time*60;
+                float min=time*60;
+                int minn=(int)min;
+                int minnn=minn%60;
+
+                int l=(int)x;
+                int z=l%60;
+                String converter=String.format("%.0f",time);
+                String s = String.format("%.2f", totdist);
+                t2.setText(s+" km");
+                if (converter.equalsIgnoreCase("0")&&minn==0)
+                {
+                    t3.setText("reach you now");
+                }
+                else {
+                    t3.setText(converter + "Hrs" + minn + " minutes");
+                }
+
 
             }
         });
@@ -162,6 +186,19 @@ public class Track extends AppCompatActivity {
         //intent.putExtra("id",s4);
         //jobDispatcher=new FirebaseJobDispatcher(new GooglePlayDriver(this));
 //getLocation();
+         b4.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent=new Intent(Track.this,MapsActivity.class);
+                 intent.putExtra("id",s1);
+                 intent.putExtra("id2",s2);
+                 startActivity(intent);
+             }
+         });
+
+
+
+
     }
   /*  void getLocation() {
         try {
